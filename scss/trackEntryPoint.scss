@@ -47,14 +47,15 @@
   z-index: 10;
 }
 .track-name {
-  width: 1000px;
-  display: block;
+  width: auto;
+  min-width: 100%;
+  white-space: nowrap;
+  display: inline-block;
   position: absolute;
-  top: -30px;
+  top: -35px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
-  opacity: 1;
   transition: all cubic-bezier(0.06,0.63,0.29,0.98) 0.3s;
 }
 .track-name:hover {
