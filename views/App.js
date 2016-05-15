@@ -48,10 +48,10 @@ class App extends React.Component {
   }
   handleOnKeyDown(e) {
     if (e.key === 'Enter' && e.target.value) {
-      this.context.router.push(`/?q=${e.target.value}#${encode(getHashParams())}`);
+      this.context.router.push(`/spotify-relevant/?q=${e.target.value}#${encode(getHashParams())}`);
       this.search(e.target.value);
     } else if (e.key === 'Enter' && !e.target.value) {
-      this.context.router.push(`/?q=${e.target.value}#${encode(getHashParams())}`);
+      this.context.router.push(`/spotify-relevant/?q=${e.target.value}#${encode(getHashParams())}`);
       this.setState({
         tracks: [],
       });
