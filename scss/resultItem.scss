@@ -1,0 +1,30 @@
+@import "border-radius";
+
+.result-item {
+  padding: 8px 15px;
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  display: block;
+}
+.result-item:first-child {
+  @include border-radius(2px);
+  border-top: 1px solid #ddd;
+  padding: 8px 15px;
+  display: block;
+}
+.result-item:last-child {
+  @include border-radius(2px);
+  border-bottom: 1px solid #ddd;
+  padding: 8px 15px;
+  display: block;
+}
+.result-name {
+  display: block;
+}
+.result-album {
+  display: block;
+}
+.result-artist {
+  padding-left: 20px;
+}

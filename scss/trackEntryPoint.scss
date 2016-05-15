@@ -1,0 +1,127 @@
+@import "border-radius";
+
+.track {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+.border {
+  @include border-radius(2px);
+  border: 3px solid #000;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  transform-origin: center center;
+  //transition: all 600ms cubic-bezier(0.1,0.7,0.37,0.93);// prtty good
+  transition: all 600ms cubic-bezier(0.06,0.63,0.29,0.98);
+  transform: scale(1.1);
+  opacity: 0;
+  overflow: hidden;
+}
+.show {
+  opacity: 1;
+  transform: scale(1);
+}
+.track-album-cover-container {
+  @include border-radius(2px);
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 47%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  z-index: 50;
+}
+.track-album-cover {
+  width: 300px;
+  height: 300px;
+  vertical-align: top;
+  cursor: pointer;
+  z-index: 10;
+}
+.track-name {
+  width: 1000px;
+  display: block;
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: 1;
+  transition: all cubic-bezier(0.06,0.63,0.29,0.98) 0.3s;
+}
+.track-name:hover + #audio-features {
+  opacity: 1;
+  visibility: visible;
+}
+#audio-features {
+  width: 280px;
+  position: absolute;
+  display: block;
+  opacity: 0;
+  transition: all cubic-bezier(0.06,0.63,0.29,0.98) 0.3s;
+  visibility: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.audio-feature {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #fff;
+}
+.back-container {
+  display: block;
+  position: relative;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 50;
+}
+.back {
+  width: 70px;
+  cursor: pointer;
+  z-index: 50;
+}
+.arrow {
+  font-size: 21px;
+  padding-right: 5px;
+  position: relative;
+  color: #000;
+  right: 0;
+  transition: all cubic-bezier(0.06,0.63,0.29,0.98) 0.3s;
+}
+.back:hover > .arrow {
+  color: #000;
+  right: 10px;
+}
+.word {
+  position: absolute;
+  width: auto;
+}
+.fade-enter {
+  opacity: 0.01;
+  transform: translateY(40px);
+}
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all cubic-bezier(0.06,0.63,0.29,0.98) 0.3s;
+}
+.fade-leave {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-leave.fade-leave-active {
+  opacity: 0.01;
+  transform: translateY(-40px);
+  transition: all cubic-bezier(0.06,0.63,0.29,0.98) 0.3s;
+}

@@ -1,0 +1,14 @@
+.seeking {
+  height: 8px;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+  background-color: #f1f1f1;
+}
+.progress {
+  height: 8px;
+  bottom: 0;
+  position: absolute;
+  background-color: #000;
+  transition: width ease 50ms;
+}
