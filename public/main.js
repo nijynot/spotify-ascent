@@ -25725,10 +25725,10 @@ webpackJsonp([0,1],[
 	    key: 'handleOnKeyDown',
 	    value: function handleOnKeyDown(e) {
 	      if (e.key === 'Enter' && e.target.value) {
-	        this.context.router.push('/?q=' + e.target.value + '#' + (0, _querystring.encode)((0, _hash.getHashParams)()));
+	        this.context.router.push('/spotify-relevant/?q=' + e.target.value + '#' + (0, _querystring.encode)((0, _hash.getHashParams)()));
 	        this.search(e.target.value);
 	      } else if (e.key === 'Enter' && !e.target.value) {
-	        this.context.router.push('/?q=' + e.target.value + '#' + (0, _querystring.encode)((0, _hash.getHashParams)()));
+	        this.context.router.push('/spotify-relevant/?q=' + e.target.value + '#' + (0, _querystring.encode)((0, _hash.getHashParams)()));
 	        this.setState({
 	          tracks: []
 	        });
