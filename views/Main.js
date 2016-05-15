@@ -8,7 +8,7 @@ import TrackEntryPoint from './entrypoints/TrackEntryPoint.js';
 render(
   <Router history={browserHistory}>
     <Route
-      path="/spotify-relevant"
+      path="/spotify-relevant/"
       component={App}
     />
     <Route
