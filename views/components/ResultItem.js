@@ -11,7 +11,7 @@ function ResultItem(props) {
     <div className="result-item">
       <span className="result-name bold">
         <Link
-          to={`/track/${props.id}#${encode(getHashParams())}`}
+          to={`/spotify-relevant/track/${props.id}#${encode(getHashParams())}`}
         >
           {props.name}
         </Link>

@@ -106,7 +106,7 @@ class App extends React.Component {
       <div className="content">
         <div className="logo bold">
           <Link
-            to={`/#${encode(getHashParams())}`}
+            to={`/spotify-relevant/#${encode(getHashParams())}`}
             onClick={this.reset}
           >
             RELEVANT

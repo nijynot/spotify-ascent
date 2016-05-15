@@ -33,11 +33,11 @@ webpackJsonp([0,1],[
 	  _reactRouter.Router,
 	  { history: _reactRouter.browserHistory },
 	  _react2.default.createElement(_reactRouter.Route, {
-	    path: '/',
+	    path: '/spotify-relevant',
 	    component: _App2.default
 	  }),
 	  _react2.default.createElement(_reactRouter.Route, {
-	    path: '/track/:id',
+	    path: '/spotify-relevant/track/:id',
 	    component: _TrackEntryPoint2.default
 	  })
 	), document.getElementById('wrap'));
@@ -25798,7 +25798,7 @@ webpackJsonp([0,1],[
 	          _react2.default.createElement(
 	            _reactRouter.Link,
 	            {
-	              to: '/#' + (0, _querystring.encode)((0, _hash.getHashParams)()),
+	              to: '/spotify-relevant/#' + (0, _querystring.encode)((0, _hash.getHashParams)()),
 	              onClick: this.reset
 	            },
 	            'RELEVANT'
@@ -27417,7 +27417,7 @@ webpackJsonp([0,1],[
 	      _react2.default.createElement(
 	        _reactRouter.Link,
 	        {
-	          to: '/track/' + props.id + '#' + (0, _querystring.encode)((0, _hash.getHashParams)())
+	          to: '/spotify-relevant/track/' + props.id + '#' + (0, _querystring.encode)((0, _hash.getHashParams)())
 	        },
 	        props.name
 	      )
