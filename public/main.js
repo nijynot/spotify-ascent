@@ -33,11 +33,11 @@ webpackJsonp([0,1],[
 	  _reactRouter.Router,
 	  { history: _reactRouter.browserHistory },
 	  _react2.default.createElement(_reactRouter.Route, {
-	    path: '/spotify-relevant/',
+	    path: '/spotify-ascent/',
 	    component: _App2.default
 	  }),
 	  _react2.default.createElement(_reactRouter.Route, {
-	    path: '/spotify-relevant/track/:id',
+	    path: '/spotify-ascent/track/:id',
 	    component: _TrackEntryPoint2.default
 	  })
 	), document.getElementById('wrap'));
@@ -25706,7 +25706,7 @@ webpackJsonp([0,1],[
 	    key: 'handleOnClick',
 	    value: function handleOnClick() {
 	      var client_id = '8f2cb7479b9348a68cd962cc7fae7733'; // Your client id
-	      var redirect_uri = 'http://nijynot.github.io/spotify-relevant/'; // Your redirect uri
+	      var redirect_uri = 'http://nijynot.github.io/spotify-ascent/'; // Your redirect uri
 	      var state = (0, _randexp.randexp)(/[a-zA-Z0-9]{16}/);
 
 	      localStorage.setItem(stateKey, state);
@@ -25725,10 +25725,10 @@ webpackJsonp([0,1],[
 	    key: 'handleOnKeyDown',
 	    value: function handleOnKeyDown(e) {
 	      if (e.key === 'Enter' && e.target.value) {
-	        this.context.router.push('/spotify-relevant/?q=' + e.target.value + '#' + (0, _querystring.encode)((0, _hash.getHashParams)()));
+	        this.context.router.push('/spotify-ascent/?q=' + e.target.value + '#' + (0, _querystring.encode)((0, _hash.getHashParams)()));
 	        this.search(e.target.value);
 	      } else if (e.key === 'Enter' && !e.target.value) {
-	        this.context.router.push('/spotify-relevant/?q=' + e.target.value + '#' + (0, _querystring.encode)((0, _hash.getHashParams)()));
+	        this.context.router.push('/spotify-ascent/?q=' + e.target.value + '#' + (0, _querystring.encode)((0, _hash.getHashParams)()));
 	        this.setState({
 	          tracks: []
 	        });
@@ -25805,10 +25805,10 @@ webpackJsonp([0,1],[
 	          _react2.default.createElement(
 	            _reactRouter.Link,
 	            {
-	              to: '/spotify-relevant/#' + (0, _querystring.encode)((0, _hash.getHashParams)()),
+	              to: '/spotify-ascent/#' + (0, _querystring.encode)((0, _hash.getHashParams)()),
 	              onClick: this.reset
 	            },
-	            'RELEVANT'
+	            'ASCENT'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -27419,7 +27419,7 @@ webpackJsonp([0,1],[
 	      _react2.default.createElement(
 	        _reactRouter.Link,
 	        {
-	          to: '/spotify-relevant/track/' + props.id + '#' + (0, _querystring.encode)((0, _hash.getHashParams)())
+	          to: '/spotify-ascent/track/' + props.id + '#' + (0, _querystring.encode)((0, _hash.getHashParams)())
 	        },
 	        props.name
 	      )
@@ -27591,7 +27591,9 @@ webpackJsonp([0,1],[
 
 	var _hash = __webpack_require__(241);
 
-	var _Seeking = __webpack_require__(266);
+	__webpack_require__(266);
+
+	var _Seeking = __webpack_require__(267);
 
 	var _Seeking2 = _interopRequireDefault(_Seeking);
 
@@ -27603,7 +27605,7 @@ webpackJsonp([0,1],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	__webpack_require__(269);
+	__webpack_require__(270);
 
 	var headers = new Headers({
 	  Host: 'api.spotify.com',
@@ -45075,6 +45077,445 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 266 */
+/***/ function(module, exports) {
+
+	(function(self) {
+	  'use strict';
+
+	  if (self.fetch) {
+	    return
+	  }
+
+	  var support = {
+	    searchParams: 'URLSearchParams' in self,
+	    iterable: 'Symbol' in self && 'iterator' in Symbol,
+	    blob: 'FileReader' in self && 'Blob' in self && (function() {
+	      try {
+	        new Blob()
+	        return true
+	      } catch(e) {
+	        return false
+	      }
+	    })(),
+	    formData: 'FormData' in self,
+	    arrayBuffer: 'ArrayBuffer' in self
+	  }
+
+	  function normalizeName(name) {
+	    if (typeof name !== 'string') {
+	      name = String(name)
+	    }
+	    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
+	      throw new TypeError('Invalid character in header field name')
+	    }
+	    return name.toLowerCase()
+	  }
+
+	  function normalizeValue(value) {
+	    if (typeof value !== 'string') {
+	      value = String(value)
+	    }
+	    return value
+	  }
+
+	  // Build a destructive iterator for the value list
+	  function iteratorFor(items) {
+	    var iterator = {
+	      next: function() {
+	        var value = items.shift()
+	        return {done: value === undefined, value: value}
+	      }
+	    }
+
+	    if (support.iterable) {
+	      iterator[Symbol.iterator] = function() {
+	        return iterator
+	      }
+	    }
+
+	    return iterator
+	  }
+
+	  function Headers(headers) {
+	    this.map = {}
+
+	    if (headers instanceof Headers) {
+	      headers.forEach(function(value, name) {
+	        this.append(name, value)
+	      }, this)
+
+	    } else if (headers) {
+	      Object.getOwnPropertyNames(headers).forEach(function(name) {
+	        this.append(name, headers[name])
+	      }, this)
+	    }
+	  }
+
+	  Headers.prototype.append = function(name, value) {
+	    name = normalizeName(name)
+	    value = normalizeValue(value)
+	    var list = this.map[name]
+	    if (!list) {
+	      list = []
+	      this.map[name] = list
+	    }
+	    list.push(value)
+	  }
+
+	  Headers.prototype['delete'] = function(name) {
+	    delete this.map[normalizeName(name)]
+	  }
+
+	  Headers.prototype.get = function(name) {
+	    var values = this.map[normalizeName(name)]
+	    return values ? values[0] : null
+	  }
+
+	  Headers.prototype.getAll = function(name) {
+	    return this.map[normalizeName(name)] || []
+	  }
+
+	  Headers.prototype.has = function(name) {
+	    return this.map.hasOwnProperty(normalizeName(name))
+	  }
+
+	  Headers.prototype.set = function(name, value) {
+	    this.map[normalizeName(name)] = [normalizeValue(value)]
+	  }
+
+	  Headers.prototype.forEach = function(callback, thisArg) {
+	    Object.getOwnPropertyNames(this.map).forEach(function(name) {
+	      this.map[name].forEach(function(value) {
+	        callback.call(thisArg, value, name, this)
+	      }, this)
+	    }, this)
+	  }
+
+	  Headers.prototype.keys = function() {
+	    var items = []
+	    this.forEach(function(value, name) { items.push(name) })
+	    return iteratorFor(items)
+	  }
+
+	  Headers.prototype.values = function() {
+	    var items = []
+	    this.forEach(function(value) { items.push(value) })
+	    return iteratorFor(items)
+	  }
+
+	  Headers.prototype.entries = function() {
+	    var items = []
+	    this.forEach(function(value, name) { items.push([name, value]) })
+	    return iteratorFor(items)
+	  }
+
+	  if (support.iterable) {
+	    Headers.prototype[Symbol.iterator] = Headers.prototype.entries
+	  }
+
+	  function consumed(body) {
+	    if (body.bodyUsed) {
+	      return Promise.reject(new TypeError('Already read'))
+	    }
+	    body.bodyUsed = true
+	  }
+
+	  function fileReaderReady(reader) {
+	    return new Promise(function(resolve, reject) {
+	      reader.onload = function() {
+	        resolve(reader.result)
+	      }
+	      reader.onerror = function() {
+	        reject(reader.error)
+	      }
+	    })
+	  }
+
+	  function readBlobAsArrayBuffer(blob) {
+	    var reader = new FileReader()
+	    reader.readAsArrayBuffer(blob)
+	    return fileReaderReady(reader)
+	  }
+
+	  function readBlobAsText(blob) {
+	    var reader = new FileReader()
+	    reader.readAsText(blob)
+	    return fileReaderReady(reader)
+	  }
+
+	  function Body() {
+	    this.bodyUsed = false
+
+	    this._initBody = function(body) {
+	      this._bodyInit = body
+	      if (typeof body === 'string') {
+	        this._bodyText = body
+	      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+	        this._bodyBlob = body
+	      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+	        this._bodyFormData = body
+	      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+	        this._bodyText = body.toString()
+	      } else if (!body) {
+	        this._bodyText = ''
+	      } else if (support.arrayBuffer && ArrayBuffer.prototype.isPrototypeOf(body)) {
+	        // Only support ArrayBuffers for POST method.
+	        // Receiving ArrayBuffers happens via Blobs, instead.
+	      } else {
+	        throw new Error('unsupported BodyInit type')
+	      }
+
+	      if (!this.headers.get('content-type')) {
+	        if (typeof body === 'string') {
+	          this.headers.set('content-type', 'text/plain;charset=UTF-8')
+	        } else if (this._bodyBlob && this._bodyBlob.type) {
+	          this.headers.set('content-type', this._bodyBlob.type)
+	        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+	          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
+	        }
+	      }
+	    }
+
+	    if (support.blob) {
+	      this.blob = function() {
+	        var rejected = consumed(this)
+	        if (rejected) {
+	          return rejected
+	        }
+
+	        if (this._bodyBlob) {
+	          return Promise.resolve(this._bodyBlob)
+	        } else if (this._bodyFormData) {
+	          throw new Error('could not read FormData body as blob')
+	        } else {
+	          return Promise.resolve(new Blob([this._bodyText]))
+	        }
+	      }
+
+	      this.arrayBuffer = function() {
+	        return this.blob().then(readBlobAsArrayBuffer)
+	      }
+
+	      this.text = function() {
+	        var rejected = consumed(this)
+	        if (rejected) {
+	          return rejected
+	        }
+
+	        if (this._bodyBlob) {
+	          return readBlobAsText(this._bodyBlob)
+	        } else if (this._bodyFormData) {
+	          throw new Error('could not read FormData body as text')
+	        } else {
+	          return Promise.resolve(this._bodyText)
+	        }
+	      }
+	    } else {
+	      this.text = function() {
+	        var rejected = consumed(this)
+	        return rejected ? rejected : Promise.resolve(this._bodyText)
+	      }
+	    }
+
+	    if (support.formData) {
+	      this.formData = function() {
+	        return this.text().then(decode)
+	      }
+	    }
+
+	    this.json = function() {
+	      return this.text().then(JSON.parse)
+	    }
+
+	    return this
+	  }
+
+	  // HTTP methods whose capitalization should be normalized
+	  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT']
+
+	  function normalizeMethod(method) {
+	    var upcased = method.toUpperCase()
+	    return (methods.indexOf(upcased) > -1) ? upcased : method
+	  }
+
+	  function Request(input, options) {
+	    options = options || {}
+	    var body = options.body
+	    if (Request.prototype.isPrototypeOf(input)) {
+	      if (input.bodyUsed) {
+	        throw new TypeError('Already read')
+	      }
+	      this.url = input.url
+	      this.credentials = input.credentials
+	      if (!options.headers) {
+	        this.headers = new Headers(input.headers)
+	      }
+	      this.method = input.method
+	      this.mode = input.mode
+	      if (!body) {
+	        body = input._bodyInit
+	        input.bodyUsed = true
+	      }
+	    } else {
+	      this.url = input
+	    }
+
+	    this.credentials = options.credentials || this.credentials || 'omit'
+	    if (options.headers || !this.headers) {
+	      this.headers = new Headers(options.headers)
+	    }
+	    this.method = normalizeMethod(options.method || this.method || 'GET')
+	    this.mode = options.mode || this.mode || null
+	    this.referrer = null
+
+	    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
+	      throw new TypeError('Body not allowed for GET or HEAD requests')
+	    }
+	    this._initBody(body)
+	  }
+
+	  Request.prototype.clone = function() {
+	    return new Request(this)
+	  }
+
+	  function decode(body) {
+	    var form = new FormData()
+	    body.trim().split('&').forEach(function(bytes) {
+	      if (bytes) {
+	        var split = bytes.split('=')
+	        var name = split.shift().replace(/\+/g, ' ')
+	        var value = split.join('=').replace(/\+/g, ' ')
+	        form.append(decodeURIComponent(name), decodeURIComponent(value))
+	      }
+	    })
+	    return form
+	  }
+
+	  function headers(xhr) {
+	    var head = new Headers()
+	    var pairs = (xhr.getAllResponseHeaders() || '').trim().split('\n')
+	    pairs.forEach(function(header) {
+	      var split = header.trim().split(':')
+	      var key = split.shift().trim()
+	      var value = split.join(':').trim()
+	      head.append(key, value)
+	    })
+	    return head
+	  }
+
+	  Body.call(Request.prototype)
+
+	  function Response(bodyInit, options) {
+	    if (!options) {
+	      options = {}
+	    }
+
+	    this.type = 'default'
+	    this.status = options.status
+	    this.ok = this.status >= 200 && this.status < 300
+	    this.statusText = options.statusText
+	    this.headers = options.headers instanceof Headers ? options.headers : new Headers(options.headers)
+	    this.url = options.url || ''
+	    this._initBody(bodyInit)
+	  }
+
+	  Body.call(Response.prototype)
+
+	  Response.prototype.clone = function() {
+	    return new Response(this._bodyInit, {
+	      status: this.status,
+	      statusText: this.statusText,
+	      headers: new Headers(this.headers),
+	      url: this.url
+	    })
+	  }
+
+	  Response.error = function() {
+	    var response = new Response(null, {status: 0, statusText: ''})
+	    response.type = 'error'
+	    return response
+	  }
+
+	  var redirectStatuses = [301, 302, 303, 307, 308]
+
+	  Response.redirect = function(url, status) {
+	    if (redirectStatuses.indexOf(status) === -1) {
+	      throw new RangeError('Invalid status code')
+	    }
+
+	    return new Response(null, {status: status, headers: {location: url}})
+	  }
+
+	  self.Headers = Headers
+	  self.Request = Request
+	  self.Response = Response
+
+	  self.fetch = function(input, init) {
+	    return new Promise(function(resolve, reject) {
+	      var request
+	      if (Request.prototype.isPrototypeOf(input) && !init) {
+	        request = input
+	      } else {
+	        request = new Request(input, init)
+	      }
+
+	      var xhr = new XMLHttpRequest()
+
+	      function responseURL() {
+	        if ('responseURL' in xhr) {
+	          return xhr.responseURL
+	        }
+
+	        // Avoid security warnings on getResponseHeader when not allowed by CORS
+	        if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
+	          return xhr.getResponseHeader('X-Request-URL')
+	        }
+
+	        return
+	      }
+
+	      xhr.onload = function() {
+	        var options = {
+	          status: xhr.status,
+	          statusText: xhr.statusText,
+	          headers: headers(xhr),
+	          url: responseURL()
+	        }
+	        var body = 'response' in xhr ? xhr.response : xhr.responseText
+	        resolve(new Response(body, options))
+	      }
+
+	      xhr.onerror = function() {
+	        reject(new TypeError('Network request failed'))
+	      }
+
+	      xhr.ontimeout = function() {
+	        reject(new TypeError('Network request failed'))
+	      }
+
+	      xhr.open(request.method, request.url, true)
+
+	      if (request.credentials === 'include') {
+	        xhr.withCredentials = true
+	      }
+
+	      if ('responseType' in xhr && support.blob) {
+	        xhr.responseType = 'blob'
+	      }
+
+	      request.headers.forEach(function(value, name) {
+	        xhr.setRequestHeader(name, value)
+	      })
+
+	      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
+	    })
+	  }
+	  self.fetch.polyfill = true
+	})(typeof self !== 'undefined' ? self : this);
+
+
+/***/ },
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45085,7 +45526,7 @@ webpackJsonp([0,1],[
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	__webpack_require__(267);
+	__webpack_require__(268);
 
 	function Seeking(props) {
 	  return _react2.default.createElement(
@@ -45109,13 +45550,13 @@ webpackJsonp([0,1],[
 	module.exports = Seeking;
 
 /***/ },
-/* 267 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(268);
+	var content = __webpack_require__(269);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(246)(content, {});
@@ -45135,7 +45576,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 268 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(245)();
@@ -45149,13 +45590,13 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(270);
+	var content = __webpack_require__(271);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(246)(content, {});
@@ -45175,7 +45616,7 @@ webpackJsonp([0,1],[
 	}
 
 /***/ },
-/* 270 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(245)();
@@ -45183,7 +45624,7 @@ webpackJsonp([0,1],[
 
 
 	// module
-	exports.push([module.id, ".track {\n  margin: 0;\n  height: 100%;\n  overflow: hidden;\n  position: relative;\n  z-index: 0; }\n\n.border {\n  -webkit-border-radius: 2px;\n  -moz-border-radius: 2px;\n  -ms-border-radius: 2px;\n  border-radius: 2px;\n  border: 3px solid #000;\n  position: absolute;\n  top: 40px;\n  left: 40px;\n  right: 40px;\n  bottom: 40px;\n  transform-origin: center center;\n  transition: all 600ms cubic-bezier(0.06, 0.63, 0.29, 0.98);\n  transform: scale(1.1);\n  opacity: 0;\n  overflow: hidden; }\n\n.show {\n  opacity: 1;\n  transform: scale(1); }\n\n.track-album-cover-container {\n  -webkit-border-radius: 2px;\n  -moz-border-radius: 2px;\n  -ms-border-radius: 2px;\n  border-radius: 2px;\n  width: 300px;\n  height: 300px;\n  position: absolute;\n  top: 47%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  background-color: #fff;\n  border: 1px solid #ddd;\n  padding: 10px;\n  z-index: 50; }\n\n.track-album-cover {\n  width: 300px;\n  height: 300px;\n  vertical-align: top;\n  cursor: pointer;\n  z-index: 10; }\n\n.track-name {\n  width: 1000px;\n  display: block;\n  position: absolute;\n  top: -30px;\n  left: 50%;\n  transform: translateX(-50%);\n  text-align: center;\n  opacity: 1;\n  transition: all cubic-bezier(0.06, 0.63, 0.29, 0.98) 0.3s; }\n\n.track-name:hover + #audio-features {\n  opacity: 1;\n  visibility: visible; }\n\n#audio-features {\n  width: 280px;\n  position: absolute;\n  display: block;\n  opacity: 0;\n  transition: all cubic-bezier(0.06, 0.63, 0.29, 0.98) 0.3s;\n  visibility: hidden;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%); }\n\n.audio-feature {\n  display: block;\n  background-color: rgba(0, 0, 0, 0.9);\n  color: #fff; }\n\n.back-container {\n  display: block;\n  position: relative;\n  top: 20px;\n  left: 50%;\n  transform: translateX(-50%);\n  text-align: center;\n  z-index: 50; }\n\n.back {\n  width: 70px;\n  cursor: pointer;\n  z-index: 50; }\n\n.arrow {\n  font-size: 21px;\n  padding-right: 5px;\n  position: relative;\n  color: #000;\n  right: 0;\n  transition: all cubic-bezier(0.06, 0.63, 0.29, 0.98) 0.3s; }\n\n.back:hover > .arrow {\n  color: #000;\n  right: 10px; }\n\n.word {\n  position: absolute;\n  width: auto; }\n\n.fade-enter {\n  opacity: 0.01;\n  transform: translateY(40px); }\n\n.fade-enter.fade-enter-active {\n  opacity: 1;\n  transform: translateY(0);\n  transition: all cubic-bezier(0.06, 0.63, 0.29, 0.98) 0.3s; }\n\n.fade-leave {\n  opacity: 1;\n  transform: translateY(0); }\n\n.fade-leave.fade-leave-active {\n  opacity: 0.01;\n  transform: translateY(-40px);\n  transition: all cubic-bezier(0.06, 0.63, 0.29, 0.98) 0.3s; }\n", ""]);
+	exports.push([module.id, ".track {\n  margin: 0;\n  height: 100%;\n  overflow: hidden;\n  position: relative;\n  z-index: 0; }\n\n.border {\n  -webkit-border-radius: 2px;\n  -moz-border-radius: 2px;\n  -ms-border-radius: 2px;\n  border-radius: 2px;\n  border: 3px solid #000;\n  position: absolute;\n  top: 40px;\n  left: 40px;\n  right: 40px;\n  bottom: 40px;\n  transform-origin: center center;\n  transition: all 600ms cubic-bezier(0.06, 0.63, 0.29, 0.98);\n  transform: scale(1.1);\n  opacity: 0;\n  overflow: hidden; }\n\n.show {\n  opacity: 1;\n  transform: scale(1); }\n\n.track-album-cover-container {\n  -webkit-border-radius: 2px;\n  -moz-border-radius: 2px;\n  -ms-border-radius: 2px;\n  border-radius: 2px;\n  width: 300px;\n  height: 300px;\n  position: absolute;\n  top: 47%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  background-color: #fff;\n  border: 1px solid #ddd;\n  padding: 10px;\n  z-index: 50; }\n\n.track-album-cover {\n  width: 300px;\n  height: 300px;\n  vertical-align: top;\n  cursor: pointer;\n  z-index: 10; }\n\n.track-name {\n  width: 1000px;\n  display: block;\n  position: absolute;\n  top: -30px;\n  left: 50%;\n  transform: translateX(-50%);\n  text-align: center;\n  opacity: 1;\n  transition: all cubic-bezier(0.06, 0.63, 0.29, 0.98) 0.3s; }\n\n.track-name:hover {\n  background-color: #000;\n  color: #fff; }\n\n.track-name:hover + #audio-features {\n  opacity: 1;\n  visibility: visible; }\n\n#audio-features {\n  width: 280px;\n  position: absolute;\n  display: block;\n  opacity: 0;\n  transition: all cubic-bezier(0.06, 0.63, 0.29, 0.98) 0.3s;\n  visibility: hidden;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%); }\n\n.audio-feature {\n  display: block;\n  background-color: rgba(0, 0, 0, 0.9);\n  color: #fff; }\n\n.back-container {\n  display: block;\n  position: relative;\n  top: 20px;\n  left: 50%;\n  transform: translateX(-50%);\n  text-align: center;\n  z-index: 50; }\n\n.back {\n  width: 70px;\n  cursor: pointer;\n  z-index: 50; }\n\n.arrow {\n  font-size: 21px;\n  padding-right: 5px;\n  position: relative;\n  color: #000;\n  right: 0;\n  transition: all cubic-bezier(0.06, 0.63, 0.29, 0.98) 0.3s; }\n\n.back:hover > .arrow {\n  color: #000;\n  right: 10px; }\n\n.word {\n  position: absolute;\n  width: auto; }\n\n.fade-enter {\n  opacity: 0.01;\n  transform: translateY(40px); }\n\n.fade-enter.fade-enter-active {\n  opacity: 1;\n  transform: translateY(0);\n  transition: all cubic-bezier(0.06, 0.63, 0.29, 0.98) 0.3s; }\n\n.fade-leave {\n  opacity: 1;\n  transform: translateY(0); }\n\n.fade-leave.fade-leave-active {\n  opacity: 0.01;\n  transform: translateY(-40px);\n  transition: all cubic-bezier(0.06, 0.63, 0.29, 0.98) 0.3s; }\n", ""]);
 
 	// exports
 

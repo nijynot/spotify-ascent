@@ -1,5 +1,5 @@
 {
-  "name": "spotify-relevant",
+  "name": "spotify-ascent",
   "version": "1.0.0",
   "description": "",
   "main": "script.js",
@@ -25,7 +25,8 @@
     "react-addons-css-transition-group": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-router": "^2.4.0",
-    "request": "^2.72.0"
+    "request": "^2.72.0",
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",

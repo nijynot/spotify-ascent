@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import _ from 'lodash';
 import TransitionGroup from 'react-addons-css-transition-group';
 import { getHashParams } from '../../config/hash.js';
+import 'whatwg-fetch';
 
 import Seeking from '../components/Seeking.js';
 

@@ -31,7 +31,7 @@ class App extends React.Component {
   }
   handleOnClick() {
     const client_id = '8f2cb7479b9348a68cd962cc7fae7733'; // Your client id
-    const redirect_uri = 'http://nijynot.github.io/spotify-relevant/'; // Your redirect uri
+    const redirect_uri = 'http://nijynot.github.io/spotify-ascent/'; // Your redirect uri
     const state = randexp(/[a-zA-Z0-9]{16}/);
 
     localStorage.setItem(stateKey, state);
@@ -48,10 +48,10 @@ class App extends React.Component {
   }
   handleOnKeyDown(e) {
     if (e.key === 'Enter' && e.target.value) {
-      this.context.router.push(`/spotify-relevant/?q=${e.target.value}#${encode(getHashParams())}`);
+      this.context.router.push(`/spotify-ascent/?q=${e.target.value}#${encode(getHashParams())}`);
       this.search(e.target.value);
     } else if (e.key === 'Enter' && !e.target.value) {
-      this.context.router.push(`/spotify-relevant/?q=${e.target.value}#${encode(getHashParams())}`);
+      this.context.router.push(`/spotify-ascent/?q=${e.target.value}#${encode(getHashParams())}`);
       this.setState({
         tracks: [],
       });
@@ -114,10 +114,10 @@ class App extends React.Component {
       <div className="content">
         <div className="logo bold">
           <Link
-            to={`/spotify-relevant/#${encode(getHashParams())}`}
+            to={`/spotify-ascent/#${encode(getHashParams())}`}
             onClick={this.reset}
           >
-            RELEVANT
+            ASCENT
           </Link>
         </div>
 

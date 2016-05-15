@@ -57,6 +57,10 @@
   opacity: 1;
   transition: all cubic-bezier(0.06,0.63,0.29,0.98) 0.3s;
 }
+.track-name:hover {
+  background-color: #000;
+  color: #fff;
+}
 .track-name:hover + #audio-features {
   opacity: 1;
   visibility: visible;
