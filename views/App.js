@@ -102,6 +102,14 @@ class App extends React.Component {
       );
     }
 
+    let search = (getHashParams().access_token)
+      ? <Search
+        location={this.props.location}
+        search={this.search}
+        handleSearchOnKeyDown={this.handleOnKeyDown}
+        access_token={getHashParams().access_token}
+      /> : null;
+
     return (
       <div className="content">
         <div className="logo bold">
@@ -114,12 +122,7 @@ class App extends React.Component {
         </div>
 
         <div className="nav">
-          <Search
-            location={this.props.location}
-            search={this.search}
-            handleSearchOnKeyDown={this.handleOnKeyDown}
-            access_token={getHashParams().access_token}
-          />
+          {search}
           <Results
             tracks={this.state.tracks}
           />

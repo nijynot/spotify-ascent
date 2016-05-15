@@ -25789,6 +25789,13 @@ webpackJsonp([0,1],[
 	        );
 	      }
 
+	      var search = (0, _hash.getHashParams)().access_token ? _react2.default.createElement(_Search2.default, {
+	        location: this.props.location,
+	        search: this.search,
+	        handleSearchOnKeyDown: this.handleOnKeyDown,
+	        access_token: (0, _hash.getHashParams)().access_token
+	      }) : null;
+
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'content' },
@@ -25807,12 +25814,7 @@ webpackJsonp([0,1],[
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'nav' },
-	          _react2.default.createElement(_Search2.default, {
-	            location: this.props.location,
-	            search: this.search,
-	            handleSearchOnKeyDown: this.handleOnKeyDown,
-	            access_token: (0, _hash.getHashParams)().access_token
-	          }),
+	          search,
 	          _react2.default.createElement(_Results2.default, {
 	            tracks: this.state.tracks
 	          })
@@ -27690,6 +27692,7 @@ webpackJsonp([0,1],[
 	  }, {
 	    key: 'goBack',
 	    value: function goBack() {
+	      this.pause();
 	      this.context.router.goBack();
 	    }
 	  }, {
