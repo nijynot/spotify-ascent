@@ -33,7 +33,7 @@ webpackJsonp([0,1],[
 	  _reactRouter.Router,
 	  { history: _reactRouter.browserHistory },
 	  _react2.default.createElement(_reactRouter.Route, {
-	    path: '/spotify-relevant',
+	    path: '/spotify-relevant/',
 	    component: _App2.default
 	  }),
 	  _react2.default.createElement(_reactRouter.Route, {
@@ -25706,7 +25706,7 @@ webpackJsonp([0,1],[
 	    key: 'handleOnClick',
 	    value: function handleOnClick() {
 	      var client_id = '8f2cb7479b9348a68cd962cc7fae7733'; // Your client id
-	      var redirect_uri = 'http://localhost:1337/'; // Your redirect uri
+	      var redirect_uri = 'http://nijynot.github.io/spotify-relevant/'; // Your redirect uri
 	      var state = (0, _randexp.randexp)(/[a-zA-Z0-9]{16}/);
 
 	      localStorage.setItem(stateKey, state);
