@@ -31,7 +31,7 @@ class App extends React.Component {
   }
   handleOnClick() {
     const client_id = '8f2cb7479b9348a68cd962cc7fae7733'; // Your client id
-    const redirect_uri = 'http://localhost:1337/'; // Your redirect uri
+    const redirect_uri = 'http://nijynot.github.io/spotify-relevant/'; // Your redirect uri
     const state = randexp(/[a-zA-Z0-9]{16}/);
 
     localStorage.setItem(stateKey, state);
