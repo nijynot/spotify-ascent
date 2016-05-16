@@ -56,13 +56,10 @@ input {
   height: 100%;
 }
 .logo {
-  font-size: 32px;
-  //position: absolute;
-  //top: 30%;
-  //left: 50%;
-  //transform: translate(-50%, -50%);
+  font-size: 42px;
   text-align: center;
-  padding: 10% 0 5% 0;
+  padding: 10% 0 30px 0;
+  letter-spacing: 22px;
 }
 .nav {
   width: 700px;
@@ -72,6 +69,7 @@ input {
 .spotify-button-container {
   margin: auto;
   width: 223px;
+  margin-top: 10px;
 }
 .spotify-token-button {
   @include border-radius(500px);

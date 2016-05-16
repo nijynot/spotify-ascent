@@ -120,14 +120,13 @@ class App extends React.Component {
             ASCENT
           </Link>
         </div>
-
+        {loginButton}
         <div className="nav">
           {search}
           <Results
             tracks={this.state.tracks}
           />
         </div>
-        {loginButton}
       </div>
     );
   }
