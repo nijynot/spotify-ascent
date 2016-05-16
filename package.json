@@ -1,5 +1,5 @@
 {
-  "name": "spotify-relevant",
+  "name": "spotify-ascent",
   "version": "1.0.0",
   "description": "",
   "main": "script.js",
@@ -11,21 +11,18 @@
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.2.5",
-    "cookie-parser": "^1.4.1",
     "eslint-plugin-import": "^1.8.0",
     "eslint-plugin-jsx-a11y": "^1.2.0",
     "express": "^4.13.4",
-    "freq": "^0.1.5",
     "keyword-extractor": "0.0.12",
     "lodash": "^4.12.0",
     "querystring": "^0.2.0",
     "randexp": "^0.4.2",
-    "randomcolor": "^0.4.4",
     "react": "^15.0.2",
     "react-addons-css-transition-group": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-router": "^2.4.0",
-    "request": "^2.72.0"
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",
