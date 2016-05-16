@@ -31,7 +31,7 @@ class App extends React.Component {
   }
   handleOnClick() {
     const client_id = '8f2cb7479b9348a68cd962cc7fae7733'; // Your client id
-    const redirect_uri = 'http://localhost:1337/'; // Your redirect uri
+    const redirect_uri = 'http://localhost:1337/callback'; // Your redirect uri
     const state = randexp(/[a-zA-Z0-9]{16}/);
 
     localStorage.setItem(stateKey, state);
@@ -78,9 +78,9 @@ class App extends React.Component {
       cache: 'default',
     };
 
-    fetch(`https://api.spotify.com/v1/search?type=track&q=${query}`, options)
-    .then((res) => res.json()
-    ).then((value) => {
+    fetch(`https://api.spotify.com/v1/search?q=${query}&type=track&limit=30&offset=0`, options)
+    .then((res) => res.json())
+    .then((value) => {
       this.setState({
         tracks: value.tracks.items,
       });
@@ -102,6 +102,14 @@ class App extends React.Component {
       );
     }
 
+    let search = (getHashParams().access_token)
+      ? <Search
+        location={this.props.location}
+        search={this.search}
+        handleSearchOnKeyDown={this.handleOnKeyDown}
+        access_token={getHashParams().access_token}
+      /> : null;
+
     return (
       <div className="content">
         <div className="logo bold">
@@ -109,22 +117,21 @@ class App extends React.Component {
             to={`/#${encode(getHashParams())}`}
             onClick={this.reset}
           >
-            RELEVANT
+            <span className="logo-start bold">
+              ASCEN
+            </span>
+            <span className="logo-end bold">
+              T
+            </span>
           </Link>
         </div>
-
+        {loginButton}
         <div className="nav">
-          <Search
-            location={this.props.location}
-            search={this.search}
-            handleSearchOnKeyDown={this.handleOnKeyDown}
-            access_token={getHashParams().access_token}
-          />
+          {search}
           <Results
             tracks={this.state.tracks}
           />
         </div>
-        {loginButton}
       </div>
     );
   }

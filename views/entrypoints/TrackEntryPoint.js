@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import _ from 'lodash';
 import TransitionGroup from 'react-addons-css-transition-group';
 import { getHashParams } from '../../config/hash.js';
+import 'whatwg-fetch';
 
 import Seeking from '../components/Seeking.js';
 
@@ -49,7 +50,7 @@ class TrackEntryPoint extends React.Component {
     clearInterval(this.timePoll);
   }
   getWords() {
-    fetch(`https://api.spotify.com/v1/search?q=${this.state.trackInfo.artists[0].name}&type=track`, options)
+    fetch(`https://api.spotify.com/v1/search?q=${this.state.trackInfo.artists[0].name}&type=track&offset=0`, options)
     .then((res) => {
       return res.json();
     }).then((value) => {
@@ -61,7 +62,7 @@ class TrackEntryPoint extends React.Component {
         words: this.state.words.concat(trackNames),
       });
     });
-    fetch(`https://api.spotify.com/v1/search?q=${this.state.trackInfo.artists[0].name}&type=album`, options)
+    fetch(`https://api.spotify.com/v1/search?q=${this.state.trackInfo.artists[0].name}&type=album&offset=0`, options)
     .then((res) => res.json())
     .then((value) => {
       const albumNames = [];
@@ -77,6 +78,7 @@ class TrackEntryPoint extends React.Component {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   goBack() {
+    this.pause();
     this.context.router.goBack();
   }
   playback() {
