@@ -117,7 +117,12 @@ class App extends React.Component {
             to={`/spotify-ascent/#${encode(getHashParams())}`}
             onClick={this.reset}
           >
-            ASCENT
+            <span className="logo-start bold">
+              ASCEN
+            </span>
+            <span className="logo-end bold">
+              T
+            </span>
           </Link>
         </div>
         {loginButton}
