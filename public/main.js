@@ -25761,7 +25761,7 @@ webpackJsonp([0,1],[
 	        cache: 'default'
 	      };
 
-	      fetch('https://api.spotify.com/v1/search?type=track&q=' + query, options).then(function (res) {
+	      fetch('https://api.spotify.com/v1/search?q=' + query + '&type=track&limit=30&offset=0', options).then(function (res) {
 	        return res.json();
 	      }).then(function (value) {
 	        _this2.setState({
@@ -27663,7 +27663,7 @@ webpackJsonp([0,1],[
 	    value: function getWords() {
 	      var _this2 = this;
 
-	      fetch('https://api.spotify.com/v1/search?q=' + this.state.trackInfo.artists[0].name + '&type=track', options).then(function (res) {
+	      fetch('https://api.spotify.com/v1/search?q=' + this.state.trackInfo.artists[0].name + '&type=track&offset=0', options).then(function (res) {
 	        return res.json();
 	      }).then(function (value) {
 	        var trackNames = [];
@@ -27674,7 +27674,7 @@ webpackJsonp([0,1],[
 	          words: _this2.state.words.concat(trackNames)
 	        });
 	      });
-	      fetch('https://api.spotify.com/v1/search?q=' + this.state.trackInfo.artists[0].name + '&type=album', options).then(function (res) {
+	      fetch('https://api.spotify.com/v1/search?q=' + this.state.trackInfo.artists[0].name + '&type=album&offset=0', options).then(function (res) {
 	        return res.json();
 	      }).then(function (value) {
 	        var albumNames = [];

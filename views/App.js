@@ -78,9 +78,9 @@ class App extends React.Component {
       cache: 'default',
     };
 
-    fetch(`https://api.spotify.com/v1/search?type=track&q=${query}`, options)
-    .then((res) => res.json()
-    ).then((value) => {
+    fetch(`https://api.spotify.com/v1/search?q=${query}&type=track&limit=30&offset=0`, options)
+    .then((res) => res.json())
+    .then((value) => {
       this.setState({
         tracks: value.tracks.items,
       });
