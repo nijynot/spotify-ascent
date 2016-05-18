@@ -48,6 +48,10 @@ input {
   display: none;
   visibility: hidden;
 }
+.visible {
+  opacity: 1;
+  margin-top: 0;
+}
 .bold {
   font-weight: bold;
 }

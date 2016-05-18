@@ -6,6 +6,7 @@ const commonsPlugin =
 module.exports = {
   entry: {
     'main.js': ['./views/Main.js'],
+    'test.js': ['./public/untest.js'],
   },
   output: {
     path: './public',

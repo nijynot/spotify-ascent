@@ -9,6 +9,12 @@ import Seeking from '../components/Seeking.js';
 
 require('../../scss/trackEntryPoint.scss');
 
+function isGif(url) {
+  if (url.slice(url.length - 4, url.length) === '.gif') {
+    return true;
+  }
+}
+
 const headers = new Headers({
   Host: 'api.spotify.com',
   Accept: 'application/json',
@@ -38,22 +44,52 @@ class TrackEntryPoint extends React.Component {
       y: [],
       z: [],
       hover: false,
+      gif: null,
+      ready: false,
     };
     this.goBack = this.goBack.bind(this);
     this.playback = this.playback.bind(this);
   }
   componentDidMount() {
-    this.audioFeatures(this.props.params.id);
+    this.getAudioFeatures(this.props.params.id);
   }
   componentWillUnmount() {
-    this.state.track.stop();
-    clearInterval(this.timePoll);
+    this.pause();
   }
-  getWords() {
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  getAudioFeatures(id) {
+    fetch(`https://api.spotify.com/v1/audio-features/${id}`, options)
+    .then((res) => res.json())
+    .then((value) => {
+      this.setState({ audioFeatures: value });
+      return value.track_href;
+    })
+    .then(() => {
+      this.getTrackInfo(this.state.audioFeatures.track_href);
+    });
+  }
+  getTrackInfo(href) {
+    fetch(href, options)
+    .then((res) => res.json())
+    .then((value) => {
+      this.setState({ trackInfo: value });
+      this.setState({
+        track: new buzz.sound(value.preview_url),
+      });
+      this.state.track.bind('ended', () => {
+        this.pause();
+      });
+    })
+    .then(() => {
+      this.getGif();
+    });
+  }
+  getTrackWords() {
     fetch(`https://api.spotify.com/v1/search?q=${this.state.trackInfo.artists[0].name}&type=track&offset=0`, options)
-    .then((res) => {
-      return res.json();
-    }).then((value) => {
+    .then((res) => res.json())
+    .then((value) => {
       const trackNames = [];
       for (let i = 0; i < value.tracks.items.length; i++) {
         trackNames.push(value.tracks.items[i].name);
@@ -61,7 +97,12 @@ class TrackEntryPoint extends React.Component {
       this.setState({
         words: this.state.words.concat(trackNames),
       });
+    })
+    .then(() => {
+      this.getAlbumsWords();
     });
+  }
+  getAlbumsWords() {
     fetch(`https://api.spotify.com/v1/search?q=${this.state.trackInfo.artists[0].name}&type=album&offset=0`, options)
     .then((res) => res.json())
     .then((value) => {
@@ -72,10 +113,38 @@ class TrackEntryPoint extends React.Component {
       this.setState({
         words: this.state.words.concat(albumNames),
       });
+    })
+    .then(() => {
+      this.setState({
+        ready: true,
+      });
+      this.playback();
     });
   }
-  getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  getGif() {
+    $.ajax({
+      url: `https://api.tumblr.com/v2/tagged?tag=${this.state.trackInfo.artists[0].name}&limit=30&api_key=jFs053HURZQQbQ8Y1WRsrac1C44AeDXdMR4BqwGEyrxSgBsivB`,
+      dataType: 'jsonp',
+      success: ((data) => {
+        for (let i = 0; i < data.response.length - 1; i++) {
+          try {
+            let url = data.response[i].photos[0].alt_sizes[0].url;
+            if (isGif(url)) {
+              this.setState({
+                gif: url,
+              });
+              break;
+            }
+          } catch (e) {
+            console.log(e);
+          }
+        }
+        console.log(this.state);
+      })
+    })
+    .then(() => {
+      this.getTrackWords();
+    });
   }
   goBack() {
     this.pause();
@@ -124,31 +193,6 @@ class TrackEntryPoint extends React.Component {
     clearInterval(this.timePoll);
     clearInterval(this.showWords);
   }
-  trackInfo(href) {
-    fetch(href, options)
-    .then((res) => res.json())
-    .then((value) => {
-      this.setState({ trackInfo: value });
-      this.setState({ track: new buzz.sound(value.preview_url) });
-      this.state.track.bind('ended', () => {
-        this.pause();
-      });
-    })
-    .then(() => {
-      this.getWords();
-    });
-  }
-  audioFeatures(id) {
-    fetch(`https://api.spotify.com/v1/audio-features/${id}`, options)
-    .then((res) => res.json())
-    .then((value) => {
-      this.setState({ audioFeatures: value });
-      return value.track_href;
-    })
-    .then(() => {
-      this.trackInfo(this.state.audioFeatures.track_href);
-    });
-  }
   render() {
     let cover = (this.state.trackInfo)
       ? this.state.trackInfo.album.images[0].url : null;
@@ -195,8 +239,25 @@ class TrackEntryPoint extends React.Component {
 
     return (
       <div
-        className="track"
+        className={
+          classnames('track', { active: this.state.ready })
+        }
       >
+        <TransitionGroup
+          transitionName="fade"
+          transitionEnterTimeout={400}
+          transitionLeaveTimeout={400}
+        >
+          {this.state.gif ?
+            <div
+              className="gif"
+              style={{
+                background: `url(${this.state.gif})`,
+              }}
+            >
+            </div>
+            : null}
+        </TransitionGroup>
         <div
           className={
             classnames('border', { show: this.state.playback })
